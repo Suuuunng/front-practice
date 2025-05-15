@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lobe</title>
+    <!-- Font Awesome CDN 추가 -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* 기본 스타일 */
+      body {
+        font-family: 'Lato', sans-serif;
+        background-color: #fff;
+        color: #767676;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .container {
+        margin-top: 20px;
+        max-width: 1080px;
+        margin: 0 auto;
+        border-radius: 5px;
+      }
+      .youtube-player {
+        position: relative;
+        padding-bottom: 56.23%; /* 16:9 비율 */
+        height: 0;
+        max-width: 100%;
+        background: #000;
+        margin: 5px auto; /* 중앙 정렬 */
+        overflow: hidden; /* 넘치는 콘텐츠 숨김 */
+      }
+
+      .youtube-player iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        background: transparent;
+      }
+
+      .youtube-player img {
+        bottom: 0;
+        display: block;
+        left: 0;
+        margin: auto;
+        max-width: 100%;
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: none;
+        height: auto;
+        cursor: pointer;
+        -webkit-transition: 0.4s all;
+        -moz-transition: 0.4s all;
+        transition: 0.4s all;
+      }
+
+      .youtube-player img:hover {
+        -webkit-filter: brightness(75%);
+        filter: brightness(75%);
+      }
+
+      .youtube-player .play {
+        height: 72px;
+        width: 72px;
+        left: 50%;
+        top: 50%;
+        margin-left: -36px;
+        margin-top: -36px;
+        position: absolute;
+        background: url('//i.imgur.com/TxzC70f.png') no-repeat;
+        cursor: pointer;
+      }
+
+      .center {
+        width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      a {
+        text-decoration: none;
+        color: #767676;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: #333;
+      }
+
+      header {
+        background-color: #fff;
+        padding: 1rem 0;
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 1000px;
+        margin: 0 auto;
+      }
+
+      .header-left .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .header-center {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+      }
+
+      .header-center ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+      }
+
+      .header-center ul li a {
+        font-size: 1rem;
+        color: #767676;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .header-center ul li a:hover {
+        color: #333;
+      }
+
+      .header-right .download-btn {
+        background-color: #04ddb2;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .header-right .download-btn:hover {
+        background-color: #333;
+      }
+
+      .responsive-text {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+        display: block;
+      }
+
+      .middle {
+        text-align: center;
+        padding: 4rem 2rem;
+      }
+
+      .middle h1 {
+        font-size: 2.5rem;
+        color: #333;
+      }
+
+      .middle h1 span {
+        color: #04ddb2;
+      }
+
+      .middle p {
+        font-size: 1.125rem;
+        margin: 1rem 0;
+        color: #767676;
+      }
+
+      .middle .download-btn {
+        margin-top: 1.5rem;
+        background-color: #04ddb2;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1.125rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .middle .download-btn:hover {
+        background-color: #333;
+      }
+
+      footer {
+        background-color: #fff;
+        color: #767676;
+        line-height: 1.5;
+        padding: 2rem 1rem;
+        border-top: 1px solid #ddd;
+      }
+
+      .center {
+        width: 1000px;
+        margin: 0 auto;
+      }
+
+      .ft-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+        padding: 1.25rem 0;
+      }
+
+      .ft-main-item {
+        width: 18%;
+        padding: 1rem;
+        min-width: 12.5rem;
+      }
+
+      .ft-main-item ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .ft-title {
+        color: #333;
+        font-family: 'Merriweather', serif;
+        font-size: 1.375rem;
+        padding-bottom: 0.625rem;
+      }
+
+      footer a {
+        text-decoration: none;
+        color: #767676;
+        transition: color 0.3s ease;
+      }
+
+      footer a:hover {
+        color: #333;
+      }
+
+      .ft-social-item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0.5rem;
+      }
+
+      .ft-social-list {
+        display: flex;
+        gap: 1rem;
+        list-style: none;
+        padding: 10px;
+        margin: 10px;
+      }
+
+      .ft-social-list li a {
+        font-size: 1.5rem;
+        color: #04ddb2;
+        transition: color 0.3s ease;
+      }
+
+      .ft-social-list li a:hover {
+        color: #333;
+      }
+    </style>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var div,
+          n,
+          v = document.getElementsByClassName('youtube-player');
+        for (n = 0; n < v.length; n++) {
+          div = document.createElement('div');
+          div.setAttribute('data-id', v[n].dataset.id);
+          div.innerHTML = noThumb(v[n].dataset.id);
+          div.onclick = noIframe;
+          v[n].appendChild(div);
+        }
+      });
+
+      function noThumb(id) {
+        var thumb = '<img src="https://i.ytimg.com/vi/ID/maxresdefault.jpg">',
+          play = '<div class="play"></div>';
+        return thumb.replace('ID', id) + play;
+      }
+
+      function noIframe() {
+        var iframe = document.createElement('iframe');
+        var embed =
+          'https://www.youtube-nocookie.com/embed/ID?autoplay=1&modestbranding=1&iv_load_policy=3&rel=0&showinfo=0';
+        iframe.setAttribute('src', embed.replace('ID', this.dataset.id));
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allowfullscreen', '1');
+        iframe.setAttribute('allow', 'autoplay; encrypted-media');
+        this.parentNode.replaceChild(iframe, this);
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="header-left">
+          <a href="#" class="logo">Lobe</a>
+        </div>
+        <nav class="header-center">
+          <ul>
+            <li><a href="#">Overview</a></li>
+            <li><a href="#">Examples</a></li>
+            <li><a href="#">Tour</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </nav>
+        <div class="header-right">
+          <button class="download-btn">Download</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="center">
+      <section class="middle">
+        <h1>Lobe <span>Tour</span></h1>
+        <p>
+          Build your first machine learning model in ten minutes. No code or
+          experience required.
+        </p>
+        <div class="container">
+          <div class="youtube-player" data-id="6qGiXY1SB68"></div>
+        </div>
+        <h1>Train your app with Lobe</h1>
+        <button class="download-btn">Download</button>
+      </section>
+    </div>
+
+    <footer class="center">
+      <section class="ft-main">
+        <div class="ft-main-item">
+          <h2 class="ft-title">lobe</h2>
+          <ul>
+            <li><a href="#">A product by Microsoft.</a></li>
+            <li><a href="#">All rights reserved.</a></li>
+            <li><a href="#">&copy; Microsoft 2021</a></li>
+          </ul>
+        </div>
+        <div class="ft-main-item">
+          <h2 class="ft-title">About</h2>
+          <ul>
+            <li><a href="#">Download</a></li>
+            <li><a href="#">Overview</a></li>
+            <li><a href="#">Examples</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="ft-main-item">
+          <h2 class="ft-title">General</h2>
+          <ul>
+            <li><a href="#">Notice</a></li>
+            <li><a href="#">License</a></li>
+            <li><a href="#">Press Inquiry</a></li>
+            <li><a href="#">Press Images</a></li>
+          </ul>
+        </div>
+        <div class="ft-main-item">
+          <h2 class="ft-title">Resources</h2>
+          <ul>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Tour</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy</a></li>
+          </ul>
+        </div>
+        <div class="ft-social-item">
+          <ul class="ft-social-list">
+            <li>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </footer>
+  </body>
+</html>
