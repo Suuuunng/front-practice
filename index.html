@@ -1,610 +1,401 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>동물 설명</title>
+    <title>Lobe</title>
+    <!-- Font Awesome CDN 추가 -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-      html,
+      /* 기본 스타일 */
       body {
+        font-family: 'Lato', sans-serif;
+        background-color: #fff;
+        color: #767676;
         margin: 0;
-        height: 100%;
+        padding: 0;
         display: flex;
         flex-direction: column;
-        font-family: 'Noto Sans KR', sans-serif;
-        background-image: url('ground.jpg'); /* 육지 배경 이미지 */
-        background-size: cover;
-        background-attachment: fixed; /* 스크롤 시 배경 고정 */
-        background-position: center;
+        min-height: 100vh;
       }
 
-      header {
-        flex: 0 0 auto; /* 고정 높이 */
-        background: linear-gradient(to right, #2c3e50, #4ca1af);
-        color: white;
-        padding: 60px 20px;
-        text-align: center;
-        border-bottom: 5px solid #34495e; /* 어두운 경계선 */
-      }
-
-      header h1 {
-        font-size: 3rem;
-        font-weight: bold;
-        margin-bottom: 15px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-      }
-
-      header p {
-        font-size: 1.2rem;
-        line-height: 1.8;
-        max-width: 700px;
+      .container {
+        margin-top: 20px;
+        max-width: 1080px;
         margin: 0 auto;
+        border-radius: 5px;
       }
-
-      nav {
-        background-color: white;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        z-index: 100;
-      }
-
-      nav ul {
-        display: flex; /* 가로 배치 */
-        justify-content: space-around; /* 항목 간 간격 균등 */
-        padding: 10px;
-        list-style: none;
-        margin: 0;
-      }
-
-      nav li {
-        flex: 1; /* 각 항목이 동일한 너비를 가짐 */
-      }
-
-      nav a {
-        display: block;
+      .youtube-player {
         position: relative;
-        height: 120px; /* nav 높이 */
-        text-decoration: none;
-        background-size: cover;
-        background-position: center;
-        border-radius: 10px;
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      nav a:hover {
-        transform: scale(1.05); /* 호버 시 확대 */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        z-index: 10; /* 다른 요소들보다 앞쪽으로 */
-        position: relative; /* z-index가 적용되도록 설정 */
-      }
-
-      nav .overlay {
-        position: absolute;
-        inset: 0;
-        background-color: rgba(0, 0, 0, 0.5); /* 어두운 오버레이 */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.3s ease;
-      }
-
-      nav a:hover .overlay {
-        background-color: rgba(0, 0, 0, 0.3); /* 호버 시 오버레이 밝게 */
-      }
-
-      nav span {
-        color: white;
-        font-size: 1.5rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* 텍스트 그림자 */
-      }
-
-      .content {
-        display: flex; /* 수평 정렬 */
-        gap: 20px; /* 요소 간 간격 */
-        padding: 20px;
-      }
-
-      .aside {
-        position: sticky;
-        top: 20px;
-        height: fit-content;
-        width: 20%; /* aside의 너비 */
-        background: #f9f9f9;
-        border-left: 5px solid #2d6a4f;
-        padding: 20px;
-        font-size: 1rem;
-      }
-
-      .aside h2 {
-        font-size: 1.5rem;
-        color: #2d6a4f;
-      }
-
-      .aside ul {
-        list-style: none;
-        padding: 0;
-      }
-
-      .aside ul li {
-        margin-bottom: 10px;
-      }
-
-      .aside h3 {
-        margin-top: 20px;
-        font-size: 1.2rem;
-        color: #184e77;
-      }
-
-      .aside p {
-        font-size: 1rem;
-        line-height: 1.6;
-      }
-
-      .section {
-        flex: 1; /* section이 남은 공간을 차지 */
-        background: #ffffff;
-        padding: 30px;
-        box-sizing: border-box;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      }
-
-      .section h2 {
-        font-size: 2rem;
-        color: #2d6a4f;
-        margin-bottom: 20px;
-        border-bottom: 2px solid #2d6a4f;
-        padding-bottom: 10px;
-      }
-
-      .section p {
-        font-size: 1.2rem;
-        line-height: 1.8;
-        color: #333;
-        margin-bottom: 20px;
-      }
-
-      .section img {
+        padding-bottom: 56.23%; /* 16:9 비율 */
+        height: 0;
         max-width: 100%;
-        border-radius: 10px;
-        margin-top: 20px;
+        background: #000;
+        margin: 5px auto; /* 중앙 정렬 */
+        overflow: hidden; /* 넘치는 콘텐츠 숨김 */
       }
 
-      footer {
-        flex: 0 0 auto; /* 고정 높이 */
-        height: 100px; /* 고정 높이 */
-        background-color: #2d6a4f;
-        color: white;
-        display: flex; /* Flexbox 사용 */
-        align-items: center; /* 수직 중앙 정렬 */
-        justify-content: center; /* 수평 중앙 정렬 */
-        border-top: 5px solid #184e77;
-      }
-
-      footer p {
-        font-size: 1rem;
-        margin: 0;
-      }
-
-      footer a {
-        color: #f0f4f8;
-        text-decoration: none;
-        font-weight: bold;
-      }
-
-      footer a:hover {
-        color: #cce3de;
-      }
-
-      .animal-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 3열로 정렬 */
-        gap: 20px; /* 박스 간 간격 */
-        margin-top: 20px;
-      }
-
-      .animal-box {
-        display: flex;
-        flex-direction: column; /* 사진과 이름을 세로로 정렬 */
-        align-items: center; /* 가운데 정렬 */
-        text-align: center;
-        border: 1px solid #ccc;
-        padding: 10px;
-        margin: 10px;
-        width: 200px; /* 박스 크기 통일 */
-      }
-
-      .animal-photo {
-        width: 100%; /* 사진 크기 통일 */
-        height: auto;
-        object-fit: cover; /* 사진 비율 유지 */
-        margin-bottom: 10px; /* 사진과 이름 사이 간격 */
-      }
-
-      .animal-name {
-        font-size: 18px;
-        font-weight: bold;
-        color: #333;
-      }
-
-      .animal-box:hover {
-        transform: scale(1.05); /* 호버 시 확대 */
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 강조 */
-      }
-
-      .animal-box img {
-        max-width: 100%; /* 이미지가 박스 크기를 넘지 않도록 */
-        border-radius: 10px; /* 이미지 모서리 둥글게 */
-      }
-
-      .animal-box p {
-        margin-top: 10px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #333;
-      }
-
-      .fixed-box {
-        width: 250px; /* 고정 박스의 너비 */
-        background-color: #ffffff;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        position: sticky; /* 스크롤 시 고정 */
-        top: 20px; /* 상단에서 20px 떨어짐 */
-        align-self: flex-start; /* 부모의 높이에 따라 상단 정렬 */
-      }
-
-      .fixed-box h3 {
-        font-size: 1.5rem;
-        color: #2d6a4f;
-        margin-bottom: 10px;
-      }
-
-      .fixed-box p {
-        font-size: 1rem;
-        line-height: 1.6;
-        color: #333;
-        margin-bottom: 10px;
-      }
-
-      .modal {
-        display: none; /* 기본적으로 숨김 */
-        position: fixed;
-        z-index: 1000;
-        left: 0;
+      .youtube-player iframe {
+        position: absolute;
         top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+        z-index: 100;
+        background: transparent;
       }
 
-      .modal-content {
-        background-color: white;
-        position: relative;
-        margin: 0 auto;
+      .youtube-player img {
+        bottom: 0;
+        display: block;
+        left: 0;
+        margin: auto;
+        max-width: 100%;
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: none;
+        height: auto;
+        cursor: pointer;
+        -webkit-transition: 0.4s all;
+        -moz-transition: 0.4s all;
+        transition: 0.4s all;
+      }
+
+      .youtube-player img:hover {
+        -webkit-filter: brightness(75%);
+        filter: brightness(75%);
+      }
+
+      .youtube-player .play {
+        height: 72px;
+        width: 72px;
+        left: 50%;
         top: 50%;
-        transform: translateY(-50%);
-        padding: 20px;
-        border-radius: 10px;
-        width: 50%;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        text-align: center;
-      }
-
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
+        margin-left: -36px;
+        margin-top: -36px;
+        position: absolute;
+        background: url('//i.imgur.com/TxzC70f.png') no-repeat;
         cursor: pointer;
       }
 
-      .close:hover,
-      .close:focus {
-        color: black;
+      .center {
+        width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      a {
         text-decoration: none;
+        color: #767676;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: #333;
+      }
+
+      header {
+        background-color: #fff;
+        padding: 1rem 0;
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 1000px;
+        margin: 0 auto;
+      }
+
+      .header-left .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .header-center {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+      }
+
+      .header-center ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+      }
+
+      .header-center ul li a {
+        font-size: 1rem;
+        color: #767676;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .header-center ul li a:hover {
+        color: #333;
+      }
+
+      .header-right .download-btn {
+        background-color: #04ddb2;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .header-right .download-btn:hover {
+        background-color: #333;
+      }
+
+      .responsive-text {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+        display: block;
+      }
+
+      .middle {
+        text-align: center;
+        padding: 4rem 2rem;
+      }
+
+      .middle h1 {
+        font-size: 2.5rem;
+        color: #333;
+      }
+
+      .middle h1 span {
+        color: #04ddb2;
+      }
+
+      .middle p {
+        font-size: 1.125rem;
+        margin: 1rem 0;
+        color: #767676;
+      }
+
+      .middle .download-btn {
+        margin-top: 1.5rem;
+        background-color: #04ddb2;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1.125rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .middle .download-btn:hover {
+        background-color: #333;
+      }
+
+      footer {
+        background-color: #fff;
+        color: #767676;
+        line-height: 1.5;
+        padding: 2rem 1rem;
+        border-top: 1px solid #ddd;
+      }
+
+      .center {
+        width: 1000px;
+        margin: 0 auto;
+      }
+
+      .ft-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+        padding: 1.25rem 0;
+      }
+
+      .ft-main-item {
+        width: 18%;
+        padding: 1rem;
+        min-width: 12.5rem;
+      }
+
+      .ft-main-item ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .ft-title {
+        color: #333;
+        font-family: 'Merriweather', serif;
+        font-size: 1.375rem;
+        padding-bottom: 0.625rem;
+      }
+
+      footer a {
+        text-decoration: none;
+        color: #767676;
+        transition: color 0.3s ease;
+      }
+
+      footer a:hover {
+        color: #333;
+      }
+
+      .ft-social-item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0.5rem;
+      }
+
+      .ft-social-list {
+        display: flex;
+        gap: 1rem;
+        list-style: none;
+        padding: 10px;
+        margin: 10px;
+      }
+
+      .ft-social-list li a {
+        font-size: 1.5rem;
+        color: #04ddb2;
+        transition: color 0.3s ease;
+      }
+
+      .ft-social-list li a:hover {
+        color: #333;
       }
     </style>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var div,
+          n,
+          v = document.getElementsByClassName('youtube-player');
+        for (n = 0; n < v.length; n++) {
+          div = document.createElement('div');
+          div.setAttribute('data-id', v[n].dataset.id);
+          div.innerHTML = noThumb(v[n].dataset.id);
+          div.onclick = noIframe;
+          v[n].appendChild(div);
+        }
+      });
+
+      function noThumb(id) {
+        var thumb = '<img src="https://i.ytimg.com/vi/ID/maxresdefault.jpg">',
+          play = '<div class="play"></div>';
+        return thumb.replace('ID', id) + play;
+      }
+
+      function noIframe() {
+        var iframe = document.createElement('iframe');
+        var embed =
+          'https://www.youtube-nocookie.com/embed/ID?autoplay=1&modestbranding=1&iv_load_policy=3&rel=0&showinfo=0';
+        iframe.setAttribute('src', embed.replace('ID', this.dataset.id));
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allowfullscreen', '1');
+        iframe.setAttribute('allow', 'autoplay; encrypted-media');
+        this.parentNode.replaceChild(iframe, this);
+      }
+    </script>
   </head>
   <body>
     <header>
-      <h1>길라잡이</h1>
-      <p>하늘, 바다, 육지에서 살아가는 동물들을 만나보세요.</p>
+      <div class="header-container">
+        <div class="header-left">
+          <a href="#" class="logo">Lobe</a>
+        </div>
+        <nav class="header-center">
+          <ul>
+            <li><a href="#">Overview</a></li>
+            <li><a href="#">Examples</a></li>
+            <li><a href="#">Tour</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </nav>
+        <div class="header-right">
+          <button class="download-btn">Download</button>
+        </div>
+      </div>
     </header>
-    <nav>
-      <ul>
-        <li>
-          <a href="sky.html" style="background-image: url('sky.jpg')">
-            <div class="overlay">
-              <span>하늘</span>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="ocean.html" style="background-image: url('ocean.jpg')">
-            <div class="overlay">
-              <span>바다</span>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="ground.html" style="background-image: url('ground.jpg')">
-            <div class="overlay">
-              <span>육지</span>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <div class="content">
-      <aside class="aside">
-        <h2>최근 본 동물</h2>
-        <ul>
-          <li><a href="#eagle">독수리</a></li>
-          <li><a href="#lion">사자</a></li>
-          <li><a href="#dolphin">돌고래</a></li>
-        </ul>
 
-        <h2>동물 보호 캠페인</h2>
-        <p>멸종 위기에 처한 동물들을 보호하기 위해 기부에 참여하세요.</p>
-        <a href="https://example.com/donate" target="_blank">기부하기</a>
-
-        <h2>동물 뉴스</h2>
-        <ul>
-          <li><a href="#news1">멸종 위기 동물 보호 성공 사례</a></li>
-          <li><a href="#news2">새로운 동물 종 발견</a></li>
-          <li><a href="#news3">동물원에서 태어난 아기 판다</a></li>
-        </ul>
-
-        <h2>동물 서식지</h2>
+    <div class="center">
+      <section class="middle">
+        <h1>Lobe <span>Tour</span></h1>
         <p>
-          아프리카 초원, 아마존 열대우림, 북극 등 다양한 서식지를 탐험해보세요.
+          Build your first machine learning model in ten minutes. No code or
+          experience required.
         </p>
-        <a href="#map">서식지 지도 보기</a>
-      </aside>
+        <div class="container">
+          <div class="youtube-player" data-id="6qGiXY1SB68"></div>
+        </div>
+        <h1>Train your app with Lobe</h1>
+        <button class="download-btn">Download</button>
+      </section>
+    </div>
 
-      <section class="section">
-        <h2>육지 동물 목록</h2>
-        <div class="animal-grid">
-          <div
-            class="animal-box"
-            data-name="사자"
-            data-info="사자는 초원에서 서식하며, 무리 생활을 하는 육식 동물입니다."
-            data-img="lion.jpg"
-          >
-            <img src="lion.jpg" alt="사자" class="animal-photo" />
-            <p class="animal-name">사자</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="호랑이"
-            data-info="호랑이는 숲에서 서식하며, 단독 생활을 하는 육식 동물입니다."
-            data-img="tiger.jpg"
-          >
-            <img src="tiger.jpg" alt="호랑이" class="animal-photo" />
-            <p class="animal-name">호랑이</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="코끼리"
-            data-info="코끼리는 초원과 숲에서 서식하며, 초식 동물입니다."
-            data-img="elephant.jpg"
-          >
-            <img src="elephant.jpg" alt="코끼리" class="animal-photo" />
-            <p class="animal-name">코끼리</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="기린"
-            data-info="기린은 초원에서 서식하며, 세계에서 가장 키가 큰 동물입니다."
-            data-img="giraffe.jpg"
-          >
-            <img src="giraffe.jpg" alt="기린" class="animal-photo" />
-            <p class="animal-name">기린</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="얼룩말"
-            data-info="얼룩말은 초원에서 서식하며, 독특한 줄무늬를 가지고 있습니다."
-            data-img="zebra.jpg"
-          >
-            <img src="zebra.jpg" alt="얼룩말" class="animal-photo" />
-            <p class="animal-name">얼룩말</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="코뿔소"
-            data-info="코뿔소는 초원과 숲에서 서식하며, 강력한 뿔을 가지고 있습니다."
-            data-img="rhino.jpg"
-          >
-            <img src="rhino.jpg" alt="코뿔소" class="animal-photo" />
-            <p class="animal-name">코뿔소</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="하마"
-            data-info="하마는 강가와 초원에서 서식하며, 물속에서 많은 시간을 보냅니다."
-            data-img="hippopotamus.jpg"
-          >
-            <img src="hippopotamus.jpg" alt="하마" class="animal-photo" />
-            <p class="animal-name">하마</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="늑대"
-            data-info="늑대는 숲과 산악 지대에서 서식하며, 무리를 지어 생활합니다."
-            data-img="wolf.jpg"
-          >
-            <img src="wolf.jpg" alt="늑대" class="animal-photo" />
-            <p class="animal-name">늑대</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="여우"
-            data-info="여우는 숲과 초원에서 서식하며, 민첩하고 영리한 동물입니다."
-            data-img="fox.jpg"
-          >
-            <img src="fox.jpg" alt="여우" class="animal-photo" />
-            <p class="animal-name">여우</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="곰"
-            data-info="곰은 숲과 산악 지대에서 서식하며, 강력한 힘을 가지고 있습니다."
-            data-img="bear.jpg"
-          >
-            <img src="bear.jpg" alt="곰" class="animal-photo" />
-            <p class="animal-name">곰</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="캥거루"
-            data-info="캥거루는 호주의 초원에서 서식하며, 강력한 뒷다리로 점프합니다."
-            data-img="kangaroo.jpg"
-          >
-            <img src="kangaroo.jpg" alt="캥거루" class="animal-photo" />
-            <p class="animal-name">캥거루</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="고릴라"
-            data-info="고릴라는 열대우림에서 서식하며, 지능이 높은 유인원입니다."
-            data-img="gorilla.jpg"
-          >
-            <img src="gorilla.jpg" alt="고릴라" class="animal-photo" />
-            <p class="animal-name">고릴라</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="치타"
-            data-info="치타는 초원에서 서식하며, 세계에서 가장 빠른 육상 동물입니다."
-            data-img="cheetah.jpg"
-          >
-            <img src="cheetah.jpg" alt="치타" class="animal-photo" />
-            <p class="animal-name">치타</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="표범"
-            data-info="표범은 숲과 초원에서 서식하며, 나무를 잘 타는 육식 동물입니다."
-            data-img="leopard.jpg"
-          >
-            <img src="leopard.jpg" alt="표범" class="animal-photo" />
-            <p class="animal-name">표범</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="바다사자"
-            data-info="바다사자는 해안가에서 서식하며, 물속에서 민첩하게 움직입니다."
-            data-img="sealion.jpg"
-          >
-            <img src="sealion.jpg" alt="바다사자" class="animal-photo" />
-            <p class="animal-name">바다사자</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="아르마딜로"
-            data-info="아르마딜로는 초원과 사막에서 서식하며, 단단한 갑옷 같은 껍질을 가지고 있습니다."
-            data-img="armadillo.jpg"
-          >
-            <img src="armadillo.jpg" alt="아르마딜로" class="animal-photo" />
-            <p class="animal-name">아르마딜로</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="미어캣"
-            data-info="미어캣은 사막과 초원에서 서식하며, 무리를 지어 생활합니다."
-            data-img="meerkat.jpg"
-          >
-            <img src="meerkat.jpg" alt="미어캣" class="animal-photo" />
-            <p class="animal-name">미어캣</p>
-          </div>
-          <div
-            class="animal-box"
-            data-name="들소"
-            data-info="들소는 초원에서 서식하며, 강력한 체력을 가진 초식 동물입니다."
-            data-img="bison.jpg"
-          >
-            <img src="bison.jpg" alt="들소" class="animal-photo" />
-            <p class="animal-name">들소</p>
-          </div>
+    <footer class="center">
+      <section class="ft-main">
+        <div class="ft-main-item">
+          <h2 class="ft-title">lobe</h2>
+          <ul>
+            <li><a href="#">A product by Microsoft.</a></li>
+            <li><a href="#">All rights reserved.</a></li>
+            <li><a href="#">&copy; Microsoft 2021</a></li>
+          </ul>
+        </div>
+        <div class="ft-main-item">
+          <h2 class="ft-title">About</h2>
+          <ul>
+            <li><a href="#">Download</a></li>
+            <li><a href="#">Overview</a></li>
+            <li><a href="#">Examples</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="ft-main-item">
+          <h2 class="ft-title">General</h2>
+          <ul>
+            <li><a href="#">Notice</a></li>
+            <li><a href="#">License</a></li>
+            <li><a href="#">Press Inquiry</a></li>
+            <li><a href="#">Press Images</a></li>
+          </ul>
+        </div>
+        <div class="ft-main-item">
+          <h2 class="ft-title">Resources</h2>
+          <ul>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Tour</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy</a></li>
+          </ul>
+        </div>
+        <div class="ft-social-item">
+          <ul class="ft-social-list">
+            <li>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </li>
+          </ul>
         </div>
       </section>
-
-      <!-- 고정 박스 -->
-      <div class="fixed-box">
-        <h3>깨알 정보</h3>
-        <p>사자는 하루에 약 20시간을 잠으로 보냅니다!</p>
-        <p>코끼리는 하루에 약 150kg의 음식을 먹습니다.</p>
-        <p>독수리는 시력이 사람보다 8배 더 뛰어납니다!</p>
-      </div>
-    </div>
-
-    <!-- 독수리 모달 -->
-    <div id="animal-modal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modal-title">동물 이름</h2>
-        <p id="modal-info">동물 설명</p>
-        <img
-          id="modal-img"
-          src=""
-          alt="동물 이미지"
-          style="max-width: 100%; border-radius: 10px"
-        />
-      </div>
-    </div>
-
-    <footer>
-      <p>© 2025 자연 속 동물들 | <a href="#contact">문의하기</a></p>
     </footer>
-
-    <script>
-      // 모달 요소 가져오기
-      const modal = document.getElementById('animal-modal');
-      const modalTitle = document.getElementById('modal-title');
-      const modalInfo = document.getElementById('modal-info');
-      const modalImg = document.getElementById('modal-img');
-      const closeModal = document.querySelector('.close');
-
-      // 모든 animal-box 요소 가져오기
-      const animalBoxes = document.querySelectorAll('.animal-box');
-
-      // animal-box 클릭 이벤트 추가
-      animalBoxes.forEach((box) => {
-        box.addEventListener('click', () => {
-          // data 속성에서 정보 가져오기
-          const name = box.getAttribute('data-name');
-          const info = box.getAttribute('data-info');
-          const img = box.getAttribute('data-img');
-
-          // 모달에 정보 설정
-          modalTitle.textContent = name;
-          modalInfo.textContent = info;
-          modalImg.src = img;
-
-          // 모달 표시
-          modal.style.display = 'block';
-        });
-      });
-
-      // 모달 닫기 버튼 클릭 이벤트
-      closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
-
-      // 모달 외부 클릭 시 닫기
-      modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
-          modal.style.display = 'none';
-        }
-      });
-    </script>
   </body>
 </html>
